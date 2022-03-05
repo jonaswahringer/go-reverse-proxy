@@ -1,0 +1,12 @@
+2022/03/05 11:57:00 Sending request to Proxy: https://www.apple.com/
+2022/03/05 11:57:05 https://www.google.com/
+2022/03/05 11:57:05 Sending request to Proxy: https://www.google.com/
+2022/03/05 11:57:06 http: proxy error: context canceled
+2022/03/05 11:57:06 https://www.facebook.com/
+2022/03/05 11:57:06 Sending request to Proxy: https://www.facebook.com/
+2022/03/05 11:57:06 http: proxy error: context canceled
+2022/03/05 11:57:07 https://www.apple.com/
+2022/03/05 11:57:07 Sending request to Proxy: https://www.apple.com/
+2022/03/05 11:58:12 proxy: https://www.apple.com/
+2022/03/05 11:58:14 proxy: https://www.google.com/
+2022/03/05 11:58:25 proxy: https://www.facebook.com/

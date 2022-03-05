@@ -8,20 +8,19 @@ import (
 	"os"
 )
 
-var serverCount = 0
+var serverPointer = 0
 
 const (
 	SERVER1 = "https://www.apple.com/"
 	SERVER2 = "https://www.google.com/"
 	SERVER3 = "https://www.facebook.com/"
-	PORT    = "1338"
+	PORT    = "8000"
 )
 
 func main() {
-
 	// start server
 	http.HandleFunc("/", loadBalancer)
-	log.Println("Listening for requests at http://localhost:8000/hello")
+	log.Println("Listening for requests at http://localhost:8000/")
 	log.Fatal(http.ListenAndServe(":"+PORT, nil)) //nil ... automatically creates http.NewServeMux() object
 }
 
@@ -39,21 +38,26 @@ func loadBalancer(res http.ResponseWriter, req *http.Request) {
 
 // get server using RR
 func getProxyURL() string {
-	serverPointer := 0
-	var servers = []string{SERVER1, SERVER2, SERVER3}
-	currentServer := servers[serverPointer]
-	serverPointer++
+	u, err := url.Parse(SERVER1)
 
-	if serverPointer >= len(servers) {
-		serverPointer = 0
-	}
+	var servers = []*url.URL{url.Parse(SERVER1), url.Parse(SERVER2), url.Parse(SERVER3)}
+	/*
 
-	return currentServer
+		currentServer := servers[serverPointer]
+		serverPointer++
+
+		if serverPointer >= len(servers) {
+			serverPointer = 0
+		}
+
+		return currentServer
+	*/
+	// implement WRR
+	New(servers)
 }
 
 // logger
 func logRequestPayload(url string) {
-	log.Println(url)
 	file, err := os.OpenFile("logs/logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		log.Fatal(err)
@@ -61,7 +65,7 @@ func logRequestPayload(url string) {
 
 	log.SetOutput(file)
 
-	log.Println("Sending request to Proxy: " + url)
+	log.Println("proxy: " + url)
 }
 
 // create reverse proxy & serve http
