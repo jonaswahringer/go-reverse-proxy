@@ -7,5 +7,6 @@ Simple reverse proxy written in Go
 
 - to-be implemented features:
   - Weighted Round Robin (WRR)
+    ~ dynamically get capacity usage from server to calculate weight
   - dynamic Server URLs for universal usage
     => High performance rev-proxy, which can be used in front of various kinds of backend servers
